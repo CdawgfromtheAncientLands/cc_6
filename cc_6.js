@@ -1,6 +1,6 @@
 //U94140233
 //Implement a JavaScript constructor class named Ball.
-//Initialize properties such as x, y, radius, dx (change in x-coordinate), dy (change in y-coordinate), and color.
+//Initialize properties such as ballStartX, ballStartY, ballRadius, ballDX (change in ballStartX-coordinate), ballDY (change in ballStartY-coordinate), and color.
 
 const canvas = document.getElementById('ballCanvas');
 const ctx = canvas.getContext('2d');
@@ -25,18 +25,28 @@ class Ball {
     }
     //Implement an update method that handles the ball's movement.
     //This should include logic to reverse the ball’s direction upon hitting the canvas sides (collision detection).
-    update(canvas) {
-        if (this.x + this.dx > canvas.width - this.radius || this.x + this.dx < this.radius) {
-            this.dx = -this.dx;
+    updateBall(canvas) {
+        if (this.ballStartX + this.ballDX > canvas.width - this.ballRadius || this.ballStartX + this.ballDX < this.ballRadius) {
+            this.ballDX = -this.ballDX;
         }
-        if (this.y + this.dy > canvas.height - this.radius || this.y + this.dy < this.radius) {
-            this.dy = -this.dy;
+        if (this.ballStartY + this.ballDY > canvas.height - this.ballRadius || this.ballStartY + this.ballDY < this.ballRadius) {
+            this.ballDY = -this.ballDY;
         }
-        this.x += this.dx;
-        this.y += this.dy;
+        this.ballStartX += this.ballDX;
+        this.ballStartY += this.ballDY;
     }
 }
 
+//Use setInterval to continuously update the ball's position and redraw it on the canvas, creating the animation effect.
+//Choose a suitable interval for smooth animation.
 
 const ball = new Ball(200, 160, 20, 2, 2, 'red');
 ball.drawBall(ctx);
+
+function animateBall() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ball.drawBall(ctx);
+    ball.updateBall(canvas);
+}
+
+setInterval(animateBall, 10);
