@@ -23,7 +23,20 @@ class Ball {
         ctx.fill();
         ctx.closePath()
     }
+    //Implement an update method that handles the ball's movement.
+    //This should include logic to reverse the ball’s direction upon hitting the canvas sides (collision detection).
+    update(canvas) {
+        if (this.x + this.dx > canvas.width - this.radius || this.x + this.dx < this.radius) {
+            this.dx = -this.dx;
+        }
+        if (this.y + this.dy > canvas.height - this.radius || this.y + this.dy < this.radius) {
+            this.dy = -this.dy;
+        }
+        this.x += this.dx;
+        this.y += this.dy;
+    }
 }
+
 
 const ball = new Ball(200, 160, 20, 2, 2, 'red');
 ball.drawBall(ctx);
